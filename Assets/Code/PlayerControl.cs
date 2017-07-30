@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
+    enum State
+    {
+        Normal,
+        Paused
+
+    }
+
 	// Use this for initialization
 	void Start () {
 		
