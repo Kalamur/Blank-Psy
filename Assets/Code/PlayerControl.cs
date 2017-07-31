@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
+    #region attributes
+    // public attributes
     public enum State
     {
         Normal,
@@ -12,11 +14,19 @@ public class PlayerControl : MonoBehaviour {
         Count
     }
 
-    public State playerState;
+    //private attributes
+    private State playerState;
+    private Animator playerAnimator;
 
-	// Use this for initialization
-	void Start () {
-		
+    #endregion
+
+
+    // Use this for initialization
+    void Start () {
+
+        playerAnimator = gameObject.GetComponent<Animator>();
+        playerAnimator.SetFloat("Speed", 0.5f);
+
 	}
 	
 	// Update is called once per frame
