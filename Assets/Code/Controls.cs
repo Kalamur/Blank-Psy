@@ -219,15 +219,16 @@ public class Controls : MonoBehaviour {
 			{
 				if (hit.transform.tag == "Interactable" || hit.transform.tag == "Character" || hit.transform.tag == "Collectible") 
 				{
-					if (pScript.GetSelectedItem () != null) 
+                    /*if (pScript.GetSelectedItem () != null) 
 					{
 						currentPointerIcon = (Texture2D)Resources.Load ("Items/Mouse/" + pScript.GetSelectedItem () + " M");
 					} 
 					else 
 					{
 						currentPointerIcon = pointerIcons [2];
-					}
-				} 
+					}*/
+                    currentPointerIcon = pointerIcons[2];
+                } 
 				else 
 				{
 					currentPointerIcon = pointerIcons [1];

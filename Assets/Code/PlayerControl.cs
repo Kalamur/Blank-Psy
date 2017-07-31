@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-    enum State
+    public enum State
     {
         Normal,
-        Paused
+        Paused,
 
+        Count
     }
+
+    public State playerState;
 
 	// Use this for initialization
 	void Start () {
@@ -20,4 +23,9 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public State GetState()
+    {
+        return playerState;
+    }
 }
