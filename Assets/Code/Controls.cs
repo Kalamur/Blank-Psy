@@ -29,6 +29,8 @@ public class Controls : MonoBehaviour {
 		//Pause button
 	private bool pauseButton = false;
 	private bool pauseButtonFree = true;
+    //Mouse button
+    private bool lClickUp = false;
 
 	private Texture2D currentPointerIcon;
 	private PlayerControl pScript;
@@ -50,6 +52,10 @@ public class Controls : MonoBehaviour {
 		UpdateControls (dt);
 		//Buttons go out
 		UpdateButtons();
+        if(Cursor.visible == true)
+        {
+            UpdateMouse();
+        }
 	}
 
 	//
@@ -149,6 +155,14 @@ public class Controls : MonoBehaviour {
 		}
 
 	}
+
+    //
+    void UpdateMouse()
+    {
+        lClickUp = Input.GetMouseButtonUp(0);
+
+    }
+
 	//
 	void UpdateJoystick(float dt)
 	{
@@ -219,14 +233,6 @@ public class Controls : MonoBehaviour {
 			{
 				if (hit.transform.tag == "Interactable" || hit.transform.tag == "Character" || hit.transform.tag == "Collectible") 
 				{
-                    /*if (pScript.GetSelectedItem () != null) 
-					{
-						currentPointerIcon = (Texture2D)Resources.Load ("Items/Mouse/" + pScript.GetSelectedItem () + " M");
-					} 
-					else 
-					{
-						currentPointerIcon = pointerIcons [2];
-					}*/
                     currentPointerIcon = pointerIcons[2];
                 } 
 				else 
@@ -282,14 +288,50 @@ public class Controls : MonoBehaviour {
 	//
 	public string GetPointerHitName()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (pointerPosition);
-		RaycastHit hit;
+        Ray ray;
+        //If controller
+        if (Cursor.visible == false)
+        {
+            ray = Camera.main.ScreenPointToRay(pointerPosition);
+        }
+        else
+        {   //If mouse
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+        RaycastHit hit;
 		if (Physics.Raycast (ray, out hit)) 
 		{
 			return hit.transform.name;
 		}
 		return null;
 	}
+
+    //
+    public string GetPointerHitTag()
+    {
+        Ray ray;
+        //If controller
+        if (Cursor.visible == false)
+        {
+            ray = Camera.main.ScreenPointToRay(pointerPosition);
+        }
+        else
+        {   //If mouse
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.transform.tag;
+        }
+        return null;
+    }
+
+    //
+    public bool GetMouseClickUp()
+    {
+        return lClickUp;
+    }
 
 	#endregion
 }

@@ -1,0 +1,20 @@
+<MAIN>
+	<DESCRIPTIONS>
+		<DESCRIPTION name="TestBox">
+			<texto> A test Box </texto>
+		</DESCRIPTION>
+	</DESCRIPTIONS>
+	<CONVERSATIONS>
+		<CONVERSATION name="Security Bot">
+			<texto> Good day, fellow citizen </texto>
+			<texto> Remember, I'm here to help you </texto>
+		</CONVERSATION>
+	</CONVERSATIONS>
+	<EVENTS>
+		<EVENT name="Event1">
+			<texto> What the...? </texto>
+			<texto> ARE YOU MAD!? </texto>
+			<texto> Let me help you </texto>
+		</EVENT>
+	</EVENTS>
+</MAIN>

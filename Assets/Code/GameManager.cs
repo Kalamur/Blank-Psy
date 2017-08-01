@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    private string language = "English";
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,4 +15,9 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public string GetLanguage()
+    {
+        return language;
+    }
 }
