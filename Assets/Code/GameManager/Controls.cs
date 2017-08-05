@@ -282,49 +282,27 @@ public class Controls : MonoBehaviour {
 	//
 	public Vector2 GetPointerPosition()
 	{
-		return pointerPosition;
-	}
-
-	//
-	public string GetPointerHitName()
-	{
-        Ray ray;
         //If controller
         if (Cursor.visible == false)
         {
-            ray = Camera.main.ScreenPointToRay(pointerPosition);
+            return pointerPosition;
         }
-        else
-        {   //If mouse
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        else //If mouse
+        {
+            return Input.mousePosition;
         }
-        RaycastHit hit;
-		if (Physics.Raycast (ray, out hit)) 
-		{
-			return hit.transform.name;
-		}
-		return null;
 	}
 
     //
-    public string GetPointerHitTag()
+    public bool GetPointerHit(out RaycastHit hit)
     {
         Ray ray;
-        //If controller
-        if (Cursor.visible == false)
-        {
-            ray = Camera.main.ScreenPointToRay(pointerPosition);
-        }
-        else
-        {   //If mouse
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        }
-        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(GetPointerPosition());
         if (Physics.Raycast(ray, out hit))
         {
-            return hit.transform.tag;
+            return true;
         }
-        return null;
+        return false;
     }
 
     //

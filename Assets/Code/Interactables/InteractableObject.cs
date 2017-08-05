@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractableObject : MonoBehaviour {
-
-	public string name;
+    
 	public float distanceToInteract = 1.5f;
 
 	protected string[] description;
