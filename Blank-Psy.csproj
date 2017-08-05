@@ -88,6 +88,7 @@
     <Compile Include="Assets\Code\GameManager\HUD.cs" />
     <Compile Include="Assets\Code\Interactables\Elevator.cs" />
     <Compile Include="Assets\Code\Interactables\InteractableObject.cs" />
+    <Compile Include="Assets\Code\Interactables\Key.cs" />
     <Compile Include="Assets\Code\PlayerControl.cs" />
   </ItemGroup>
   <ItemGroup>

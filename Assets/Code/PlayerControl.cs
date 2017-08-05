@@ -92,13 +92,17 @@ public class PlayerControl : MonoBehaviour {
     //
     void UpdateMovement(float dt)
     {
-        if(CheckDistance() >= 1.5f)
+        if(CheckDistance() <= 1.5f)
         {
-            playerCC.Move(transform.forward * 20 * dt);
+            isMoving = false;
+        }
+        else if (CheckObjectToUseInFront())
+        {
+            isMoving = false;
         }
         else
         {
-            isMoving = false;
+            playerCC.Move(transform.forward * 20 * dt);
         }
     }
 
@@ -113,7 +117,7 @@ public class PlayerControl : MonoBehaviour {
         float offset = (pDAnlge - forwardAngle) * Mathf.Rad2Deg;
 
         transform.Rotate(0.0f, -offset, 0.0f);
-        isRotating = false;
+        //isRotating = false;
     }
 
     //
@@ -123,6 +127,22 @@ public class PlayerControl : MonoBehaviour {
         Vector2 horizontalPlaceToGo = new Vector2(placeToGo.x, placeToGo.z);
         float distance = (horizontalPlaceToGo - horizontalPosition).magnitude;
         return distance;
+    }
+
+    //
+    bool CheckObjectToUseInFront()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, 6f))
+        {
+            Debug.Log(hit.transform.gameObject);
+            if(hit.transform.gameObject == objectToInteract)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     //

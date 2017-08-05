@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Elevator : InteractableObject {
 
-    // Use this for initialization
-    new
+    private bool locked = true;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
+    //
     public override bool Use()
     {
-        Debug.Log("Using elevator");
+        if (locked)
+        {
+            Debug.Log("Locked");
+        }
+        else
+        {
+            Debug.Log("Diiing");
+        }        
         return base.Use();
+    }
+
+    //
+    public void Unlock()
+    {
+        locked = false;
     }
 }
