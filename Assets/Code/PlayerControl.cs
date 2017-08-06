@@ -95,10 +95,14 @@ public class PlayerControl : MonoBehaviour {
         if(CheckDistance() <= 1.5f)
         {
             isMoving = false;
+            isRotating = false;
         }
         else if (CheckObjectToUseInFront())
         {
             isMoving = false;
+            isRotating = false;
+            objectToInteract.GetComponent<InteractableObject>().Use();
+            objectToInteract = null;
         }
         else
         {
@@ -132,11 +136,11 @@ public class PlayerControl : MonoBehaviour {
     //
     bool CheckObjectToUseInFront()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
+        Vector3 offset = new Vector3(0.0f, 4.0f, 0.0f);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 6f))
+        if(Physics.Raycast(transform.position + offset, transform.forward, out hit, 6f))
         {
-            Debug.Log(hit.transform.gameObject);
+            //Debug.Log(hit.transform.name);
             if(hit.transform.gameObject == objectToInteract)
             {
                 return true;
