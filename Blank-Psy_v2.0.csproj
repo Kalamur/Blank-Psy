@@ -82,11 +82,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Code\CameraPivot.cs" />
-    <Compile Include="Assets\Code\Controls.cs" />
-    <Compile Include="Assets\Code\GameFunctions.cs" />
-    <Compile Include="Assets\Code\GameManager.cs" />
-    <Compile Include="Assets\Code\HUD.cs" />
-    <Compile Include="Assets\Code\InteractableObject.cs" />
+    <Compile Include="Assets\Code\GameManager\Controls.cs" />
+    <Compile Include="Assets\Code\GameManager\GameFunctions.cs" />
+    <Compile Include="Assets\Code\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Code\GameManager\HUD.cs" />
+    <Compile Include="Assets\Code\Interactables\Elevator.cs" />
+    <Compile Include="Assets\Code\Interactables\InteractableObject.cs" />
+    <Compile Include="Assets\Code\Interactables\Key.cs" />
     <Compile Include="Assets\Code\PlayerControl.cs" />
   </ItemGroup>
   <ItemGroup>
