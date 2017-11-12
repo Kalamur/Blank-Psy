@@ -32,8 +32,11 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Player components
-        playerAnimator = gameObject.GetComponent<Animator>();
-        playerAnimator.SetFloat("Speed", 1f);
+        //playerAnimator = gameObject.GetComponent<Animator>();
+        Debug.Log(transform.name);
+        playerAnimator = transform.GetChild(0).GetComponent<Animator>();
+        Debug.Log(transform.GetChild(0).name);
+        //playerAnimator.SetFloat("Speed", 1f);
         playerCC = gameObject.GetComponent<CharacterController>();
         //Gamemanager components
         controlScript = GameObject.Find("GameManager").GetComponent<Controls>();
@@ -87,6 +90,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (isMoving) UpdateMovement(dt);
         if (isRotating) UpdateRotation(dt);
+        ApplyGravity();
     }
 
     //
@@ -96,17 +100,21 @@ public class PlayerControl : MonoBehaviour {
         {
             isMoving = false;
             isRotating = false;
+            playerAnimator.SetFloat("Speed", 0.0f);
         }
         else if (CheckObjectToUseInFront())
         {
             isMoving = false;
             isRotating = false;
             objectToInteract.GetComponent<InteractableObject>().Use();
+            playerAnimator.Play("Pick up");
             objectToInteract = null;
+            playerAnimator.SetFloat("Speed", 0.0f);
         }
         else
         {
-            playerCC.Move(transform.forward * 20 * dt);
+            playerCC.Move(transform.forward * maxSpeed * dt);
+            playerAnimator.SetFloat("Speed", 1.0f);
         }
     }
 
@@ -152,7 +160,7 @@ public class PlayerControl : MonoBehaviour {
     //
     void ApplyGravity() //Revisar
     {
-        gravity -= 9.81f * Time.deltaTime;
+        gravity -= 9.81f * Time.deltaTime * 10.0f;
         playerCC.Move(transform.up * gravity * Time.deltaTime);
         if (playerCC.isGrounded) gravity = 0.0f;
     }

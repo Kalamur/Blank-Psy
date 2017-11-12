@@ -9,6 +9,7 @@ public class Elevator : InteractableObject {
     //
     public override bool Use()
     {
+        Debug.Log("Locked: " + locked);
         if (locked)
         {
             Debug.Log("Locked");
@@ -24,5 +25,6 @@ public class Elevator : InteractableObject {
     public void Unlock()
     {
         locked = false;
+        Debug.Log("Locked: " + locked);
     }
 }
