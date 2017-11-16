@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Elevator : InteractableObject {
 
+    public GameObject elevatorEvent;
+
     private bool locked = true;
 
     //
     public override bool Use()
     {
-        Debug.Log("Locked: " + locked);
         if (locked)
         {
-            Debug.Log("Locked");
+            PlayerControl pControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+            pControl.PlayerState = PlayerControl.State.Interacting;
+
+            string[] textForPlayer = GameFunctions.GetTextXML("INTERACTABLES", "INTERACTABLE", "ElevatorClosed");
+            pControl.TextToUse = textForPlayer;
         }
         else
         {
@@ -25,6 +30,5 @@ public class Elevator : InteractableObject {
     public void Unlock()
     {
         locked = false;
-        Debug.Log("Locked: " + locked);
     }
 }

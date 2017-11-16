@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
     public enum State
     {
         Normal,
+        InEvent,
+        Interacting,
         Paused,
 
         Count
@@ -25,18 +27,67 @@ public class PlayerControl : MonoBehaviour {
     private GameObject objectToInteract;
     private float gravity;
     private bool isMoving, isRotating;
+    private string[] textToUse;
+    private int currentTextLine;
+    private BaseEvent activeEvent;
 
     #endregion
 
+    #region Properties
+
+    public State PlayerState
+    {
+        get { return playerState; }
+        set
+        {
+            playerState = value;
+        }
+    }
+
+    public string[] TextToUse
+    {
+        get { return textToUse; }
+        set {
+            currentTextLine = 0;
+            Debug.Log("Text received");
+            textToUse = value;
+        }
+    }
+
+    public string CurrentText
+    {
+        get { return textToUse[currentTextLine]; }
+    }
+
+    public Vector3 PlaceToGo
+    {
+        set
+        {
+            placeToGo = value;
+            isMoving = true;
+            isRotating = true;
+        }
+    }
+
+    public BaseEvent ActiveEvent
+    {
+        get { return activeEvent; }
+        set { activeEvent = value; }
+    }
+
+    public bool IsMoving
+    {
+        get { return isMoving; }
+    }
+
+    #endregion
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         //Player components
-        //playerAnimator = gameObject.GetComponent<Animator>();
         Debug.Log(transform.name);
         playerAnimator = transform.GetChild(0).GetComponent<Animator>();
-        Debug.Log(transform.GetChild(0).name);
-        //playerAnimator.SetFloat("Speed", 1f);
         playerCC = gameObject.GetComponent<CharacterController>();
         //Gamemanager components
         controlScript = GameObject.Find("GameManager").GetComponent<Controls>();
@@ -49,39 +100,49 @@ public class PlayerControl : MonoBehaviour {
         UpdateMotion(dt);
 	}
 
-    //
-
-
-    //Get - sets
-    public State GetState()
-    {
-        return playerState;
-    }
 
     //
     void UpdateClick()
     {
         if (controlScript.GetMouseClickUp())
         {
-            RaycastHit hit;
-            if (controlScript.GetPointerHit(out hit))
+            switch(playerState)
             {
-                string objectTag = hit.transform.tag;
-                switch (objectTag)
-                {
-                    case "Interactable":
-                        objectToInteract = hit.transform.gameObject;
-                        placeToGo = objectToInteract.transform.position;
-                        //
-                        break;
-                    default:
-                        placeToGo = hit.point;
-                        //
-                        break;
-                }
+                case State.Normal:
+                    RaycastHit hit;
+                    if (controlScript.GetPointerHit(out hit))
+                    {
+                        string objectTag = hit.transform.tag;
+                        switch (objectTag)
+                        {
+                            case "Interactable":
+                                objectToInteract = hit.transform.gameObject;
+                                placeToGo = objectToInteract.transform.position;
+                                //
+                                break;
+                            default:
+                                placeToGo = hit.point;
+                                //
+                                break;
+                        }
+                    }
+                    isMoving = true;
+                    isRotating = true;
+                    break;
+                case State.Interacting:
+                    currentTextLine += 1;
+                    if(currentTextLine >= textToUse.Length)
+                    {
+                        playerState = State.Normal;
+                        textToUse = null;
+                        currentTextLine = 0;
+                    }
+                    break;
+                case State.InEvent:
+
+                    break;
             }
-            isMoving = true;
-            isRotating = true;
+            
         }
     }
 
@@ -101,6 +162,12 @@ public class PlayerControl : MonoBehaviour {
             isMoving = false;
             isRotating = false;
             playerAnimator.SetFloat("Speed", 0.0f);
+            //
+            if(playerState == State.InEvent)
+            {
+                // We'll check later
+                //activeEvent.
+            }
         }
         else if (CheckObjectToUseInFront())
         {
@@ -160,10 +227,17 @@ public class PlayerControl : MonoBehaviour {
     //
     void ApplyGravity() //Revisar
     {
-        gravity -= 9.81f * Time.deltaTime * 10.0f;
-        playerCC.Move(transform.up * gravity * Time.deltaTime);
-        if (playerCC.isGrounded) gravity = 0.0f;
+        if (playerState == State.Normal)
+        {
+            gravity -= 9.81f * Time.deltaTime * 10.0f;
+            playerCC.Move(transform.up * gravity * Time.deltaTime);
+            if (playerCC.isGrounded) gravity = 0.0f;
+        }
     }
 
-
+    public void Stop()
+    {
+        isMoving = false;
+        isRotating = false;
+    }
 }

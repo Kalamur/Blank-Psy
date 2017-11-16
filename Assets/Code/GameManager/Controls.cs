@@ -94,7 +94,7 @@ public class Controls : MonoBehaviour {
 		GUI.DrawTexture (new Rect(pointerPosition.x, Screen.height - pointerPosition.y, 20, 20), currentPointerIcon, ScaleMode.ScaleToFit);
 		//Error control
 		if (pScript) {
-			if (pScript.GetState () == PlayerControl.State.Paused) {
+			if (pScript.PlayerState == PlayerControl.State.Paused) {
 				float iconSize = hControl.GetIconSize ();
 				//Here we will paint the buttons
 				if (Input.GetJoystickNames ().Length > 0 && Input.GetJoystickNames () [0] != "") 	//Controller icons
