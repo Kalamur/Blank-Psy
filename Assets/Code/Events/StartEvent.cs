@@ -65,7 +65,7 @@ public class StartEvent : BaseEvent {
                 if (Input.GetMouseButtonDown(0))
                 {
                     Debug.Log("Click");
-                    CheckTextProgress();           
+                    CheckTextProgress();
                 }
                 break;
             case 2:

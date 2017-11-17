@@ -175,7 +175,8 @@ public class Controls : MonoBehaviour {
 		pointerPosition.x = Mathf.Clamp (pointerPosition.x, 0.0f, Screen.width);
 		pointerPosition.y = Mathf.Clamp (pointerPosition.y, 0.0f, Screen.height);
 	}
-	//
+	
+    //
 	void UpdateGamepad(float dt)
 	{
 		//Detect controllers
