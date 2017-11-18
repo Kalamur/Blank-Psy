@@ -14,7 +14,7 @@ public class Key : InteractableObject {
     private float animationState;
 
     // Private Attributes
-    private float firstStagePercentage = 0.2f;
+    private float stagePercentage = 0.2f;
     private float dt = 0.0f;
     private Vector3 scaleOrigin = Vector3.one;
 
@@ -26,21 +26,21 @@ public class Key : InteractableObject {
         elevator.GetComponent<Elevator>().Unlock();
         
         PlayerControl pControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-            pControl.PlayerState = PlayerControl.State.Interacting;
+        pControl.PlayerState = PlayerControl.State.Interacting;
         
         string[] textForPlayer = GameFunctions.GetTextXML("INTERACTABLES", "INTERACTABLE", "ElevatorKey");
         pControl.TextToUse = textForPlayer;
 
         Destroy(gameObject, destroyTime);
-
+/*
         // make the object srank on the time and dissapear
         animationState = Mathf.Clamp01(dt / destroyTime);
 
-        if (animationState <= firstStagePercentage)
+        while (animationState <= stagePercentage)
         {
-            transform.localScale = (scaleMultiplier - remapValue(animationState, firstStagePercentage, 1.0f, 0.0f, scaleMultiplier - 1.0f)) * scaleOrigin;
+            transform.localScale = (scaleMultiplier - remapValue(animationState, stagePercentage, 1.0f, 0.0f, scaleMultiplier - 1.0f)) * scaleOrigin;
         }
-
+*/
         return base.Use();
     }
 
@@ -56,8 +56,9 @@ public class Key : InteractableObject {
     {
         scaleOrigin = transform.localScale;
 
-        //firstStagePercentage = Mathf.Clamp01(firstStagePercentage);
-        //scaleMultiplier = Mathf.Max(scaleMultiplier, 1.0f);
+        animationState = Mathf.Clamp01(dt / destroyTime);
+        // stagePercentage = Mathf.Clamp01(stagePercentage);
+        // scaleMultiplier = Mathf.Max(scaleMultiplier, 1.0f);
     }
 
     // Update is called once per frame
