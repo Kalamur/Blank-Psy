@@ -30,9 +30,14 @@ public class StartEvent : BaseEvent {
         // Active event
         pControl.PlayerState = PlayerControl.State.InEvent;
         SendRefenceToPlayerAndHUD();
+        
         //
         capsuleInitialY = capsule.transform.position.y;
         showText = true;
+        hControl.NewFadeStatus(1.0f, -1);
+
+        // intialize the process
+        InitializeEvent();
     }
 	
 	
@@ -50,8 +55,18 @@ public class StartEvent : BaseEvent {
     /// </summary>
     protected override void CheckStep(float dt)
     {
+        // aqui se controlan los pasos a seguir para el inicio del personaje (texto > capsula sube > establecer punto a moverse > moverse)
         switch (currentStep)
         {
+            // texto inicial
+            case 0:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("Click");
+                    CheckTextProgress();
+                }
+                break;
+            // subida de capsula
             case 1:
                 capsule.transform.Translate(Vector3.up * 5.0f * dt);
                 pControl.gameObject.transform.Translate(Vector3.up * 5.0f * dt);
@@ -61,18 +76,13 @@ public class StartEvent : BaseEvent {
                     currentStep += 1;
                 }
                 break;
-            case 0:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Debug.Log("Click");
-                    CheckTextProgress();
-                }
-                break;
+            // establecer destino
             case 2:
                 pControl.PlaceToGo = pControl.transform.forward * 30.0f
                                     + pControl.transform.position;
                 currentStep += 1;
                 break;
+            // mover y cerrar evento
             case 3:
                 if(!pControl.IsMoving)
                 {

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CameraPivot : MonoBehaviour {
 
-    private GameObject player;
+    private PlayerControl pControl;
 
 	// Use this for initialization
 	void Start () {
-        player = GameObject.Find("Player");
-	}
+        //player = GameObject.Find("Player");
+        pControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = player.transform.position;
+        if(pControl.PlayerState == PlayerControl.State.Normal)
+            transform.position = pControl.transform.position;
 	}
 }

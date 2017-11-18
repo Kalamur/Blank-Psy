@@ -230,9 +230,11 @@
     <Compile Include="Assets\Code\GameManager\GameFunctions.cs" />
     <Compile Include="Assets\Code\GameManager\GameManager.cs" />
     <Compile Include="Assets\Code\GameManager\HUD.cs" />
+    <Compile Include="Assets\Code\Interactables\Collectable.cs" />
     <Compile Include="Assets\Code\Interactables\Elevator.cs" />
     <Compile Include="Assets\Code\Interactables\InteractableObject.cs" />
     <Compile Include="Assets\Code\Interactables\Key.cs" />
+    <Compile Include="Assets\Code\Menu.cs" />
     <Compile Include="Assets\Code\PlayerControl.cs" />
   </ItemGroup>
   <ItemGroup>

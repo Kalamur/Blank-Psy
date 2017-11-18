@@ -13,7 +13,7 @@ public class Key : InteractableObject {
     // Private Attributes
     private float dt = 0.0f;
     private bool taken = false;                                             // bool to control if the player have interacted with the object
-    private Vector3 scaleReduction = new Vector3(1.0f, 1.0f, 1.0f);         // attribute in charge of the shrank speed
+    private Vector3 scaleReduction = new Vector3(3.0f, 3.0f, 3.0f);         // attribute in charge of the shrank speed
 
     #endregion
 

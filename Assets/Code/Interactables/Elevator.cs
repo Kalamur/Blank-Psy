@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elevator : InteractableObject {
+public class Elevator : InteractableObject
+{
+    #region
+    // public attributes
 
-    public GameObject elevatorEvent;
 
+    // private attributes
     private bool locked = true;
+
+    #endregion
 
     //
     public override bool Use()
@@ -22,6 +27,7 @@ public class Elevator : InteractableObject {
         else
         {
             Debug.Log("Diiing");
+            GetComponent<ElevatorEvent>().InitializeEvent();
         }        
         return base.Use();
     }

@@ -4,12 +4,18 @@
 	
 		<INTERACTABLE name="ElevatorKey">
 			<texto> Well done, Birdie </texto>
-			<texto> Now, you are free </texto>
+			<texto> Now, you path is open </texto>
 		</INTERACTABLE>
 		
 		<INTERACTABLE name="ElevatorClosed">
 			<texto> Don't worry, silly </texto>
 			<texto> There must be a key or something </texto>
+		</INTERACTABLE>
+		
+		<INTERACTABLE name="Collectable">
+			<texto> What is this? </texto>
+			<texto> Is it...? </texto>
+			<texto> ...a memory? </texto>
 		</INTERACTABLE>
 		
 	</INTERACTABLES>

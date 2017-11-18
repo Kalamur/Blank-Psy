@@ -13,9 +13,11 @@ public class BaseEvent : MonoBehaviour {
     #region Protected Attributes
 
     protected PlayerControl pControl;
+    protected HUD hControl;
+    protected GameObject cameraPivot;
     protected string[] eventText;
     protected int currentTextLine = 0;
-    protected int currentStep = 0;
+    protected int currentStep = -1;             // Process not initialized
     protected bool showText = false;
 
     #endregion
@@ -47,7 +49,9 @@ public class BaseEvent : MonoBehaviour {
     protected virtual void Start () 
 	{
         pControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+        hControl = GameObject.Find("GameManager").GetComponent<HUD>();
         eventText = GameFunctions.GetTextXML("EVENTS", "EVENT", eventName);
+        cameraPivot = GameObject.Find("Camera Pivot");
 	}
 
     #endregion
@@ -59,8 +63,8 @@ public class BaseEvent : MonoBehaviour {
     /// </summary>
     protected void SendRefenceToPlayerAndHUD()
     {
-        GameObject.Find("GameManager").GetComponent<HUD>().ActiveEvent = this;
-        GameObject.Find("Player").GetComponent<PlayerControl>().ActiveEvent = this;
+        hControl.ActiveEvent = this;
+        pControl.ActiveEvent = this;
     }
 
     /// <summary>
@@ -85,7 +89,10 @@ public class BaseEvent : MonoBehaviour {
         }
     }
 
-
+    public void InitializeEvent()
+    {
+        currentStep = 0;
+    }
 
     #endregion
 }
