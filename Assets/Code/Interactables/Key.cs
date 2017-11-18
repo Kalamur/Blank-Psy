@@ -8,15 +8,12 @@ public class Key : InteractableObject {
 
     // Public Attributes
     public GameObject elevator;
-    public float destroyTime = 2.0f;
     public float rotSpeed = 10.0f;
-    public float scaleMultiplier = 0.0f;
-    private float animationState;
 
     // Private Attributes
-    private float stagePercentage = 0.2f;
     private float dt = 0.0f;
-    private Vector3 scaleOrigin = Vector3.one;
+    private bool taken = false;                                             // bool to control if the player have interacted with the object
+    private Vector3 scaleReduction = new Vector3(1.0f, 1.0f, 1.0f);         // attribute in charge of the shrank speed
 
     #endregion
 
@@ -31,34 +28,10 @@ public class Key : InteractableObject {
         string[] textForPlayer = GameFunctions.GetTextXML("INTERACTABLES", "INTERACTABLE", "ElevatorKey");
         pControl.TextToUse = textForPlayer;
 
-        Destroy(gameObject, destroyTime);
-/*
-        // make the object srank on the time and dissapear
-        animationState = Mathf.Clamp01(dt / destroyTime);
+        // Advise that we´ve interacted with this object
+        taken = true;
 
-        while (animationState <= stagePercentage)
-        {
-            transform.localScale = (scaleMultiplier - remapValue(animationState, stagePercentage, 1.0f, 0.0f, scaleMultiplier - 1.0f)) * scaleOrigin;
-        }
-*/
         return base.Use();
-    }
-
-    // Function used to remap the values for the interval
-    float remapValue(float originValue, float firstIntervalMinimum, float firstIntervalMaximum, float secondIntervalMinimum, float secondIntervalMaximum)
-    {
-        float relative = (Mathf.Clamp(originValue, firstIntervalMinimum, firstIntervalMaximum) - firstIntervalMinimum) / (firstIntervalMaximum - firstIntervalMinimum);
-        return secondIntervalMinimum + (secondIntervalMaximum - secondIntervalMinimum) * relative;
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-        scaleOrigin = transform.localScale;
-
-        animationState = Mathf.Clamp01(dt / destroyTime);
-        // stagePercentage = Mathf.Clamp01(stagePercentage);
-        // scaleMultiplier = Mathf.Max(scaleMultiplier, 1.0f);
     }
 
     // Update is called once per frame
@@ -68,5 +41,17 @@ public class Key : InteractableObject {
         
         // Make the object rotate around its Y axis at [rotSpeed] dregrees per second
         transform.Rotate(Vector3.up, (rotSpeed * dt));
+
+        // We take the item so its going to shrank until it dissapears
+        if (taken)
+        {
+            transform.localScale -= (scaleReduction * dt);
+
+            // The object its no longer visible, so we can destroy it
+            if (transform.localScale.x <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
