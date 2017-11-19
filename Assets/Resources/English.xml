@@ -24,7 +24,7 @@
 	
 		<EVENT name="StartEvent">
 			<texto> Birdie... </texto>
-			<texto> Birdieeee... </texto>
+			<texto> Birdieee... </texto>
 			<texto> Wake up </texto>
 		</EVENT>
 		

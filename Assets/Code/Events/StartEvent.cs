@@ -7,6 +7,8 @@ public class StartEvent : BaseEvent {
     #region Public Attributes
 
     public GameObject capsule;
+    public Transform cameraStartPoint;
+    public Transform cameraEndPoint;
 
     #endregion
 
@@ -31,10 +33,10 @@ public class StartEvent : BaseEvent {
         pControl.PlayerState = PlayerControl.State.InEvent;
         SendRefenceToPlayerAndHUD();
         
-        //
+        //Start of the event stuff
         capsuleInitialY = capsule.transform.position.y;
-        showText = true;
         hControl.NewFadeStatus(1.0f, -1);
+        cameraPivot.transform.position = cameraStartPoint.position;
 
         // intialize the process
         InitializeEvent();
@@ -58,12 +60,25 @@ public class StartEvent : BaseEvent {
         // aqui se controlan los pasos a seguir para el inicio del personaje (texto > capsula sube > establecer punto a moverse > moverse)
         switch (currentStep)
         {
-            // texto inicial
+            // camara moviendose por el pasillo y texto inicial
             case 0:
-                if (Input.GetMouseButtonDown(0))
+                //
+                cameraPivot.transform.position += (cameraEndPoint.position - cameraStartPoint.position) * 0.1f * dt;
+                //
+                float totalTravelDistance = (cameraStartPoint.position - cameraEndPoint.position).magnitude;
+                float currentDistance = (cameraPivot.transform.position - cameraEndPoint.position).magnitude;
+                if(currentDistance < totalTravelDistance * 2/3 && showText == false)
                 {
-                    Debug.Log("Click");
-                    CheckTextProgress();
+                    showText = true;
+                }
+                else if (currentDistance < totalTravelDistance * 1/3 && currentTextLine == 0)
+                {
+                    currentTextLine += 1;
+                }
+                else if (currentDistance < 1.5f)
+                {
+                    currentTextLine += 1;
+                    currentStep += 1;
                 }
                 break;
             // subida de capsula
@@ -73,13 +88,13 @@ public class StartEvent : BaseEvent {
                 // Revisar tamaños
                 if(capsule.transform.position.y - capsuleInitialY >= 18.0f)
                 {
+                    showText = false;
                     currentStep += 1;
                 }
                 break;
             // establecer destino
             case 2:
-                pControl.PlaceToGo = pControl.transform.forward * 30.0f
-                                    + pControl.transform.position;
+                pControl.PlaceToGo = cameraEndPoint.position;
                 currentStep += 1;
                 break;
             // mover y cerrar evento
