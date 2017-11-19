@@ -7,7 +7,7 @@ public class HUD : MonoBehaviour {
     public float iconSizeRate = 0.2f;
     public Texture fadeTexture;
     public GUIStyle hudStyle;
-    public float fadeSpeed;
+    public float fadeSpeed = 0.1f;
 
     private float iconSize;
     private PlayerControl pControl;
@@ -34,7 +34,7 @@ public class HUD : MonoBehaviour {
     {
         if(fading)
         {
-            alpha += fadeDirection * 0.1f * Time.deltaTime;
+            alpha += fadeDirection * fadeSpeed * Time.deltaTime;
             alpha = Mathf.Clamp01(alpha);
             fadeColor = GUI.color;
             fadeColor.a = alpha;

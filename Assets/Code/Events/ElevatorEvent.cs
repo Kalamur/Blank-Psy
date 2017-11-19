@@ -8,6 +8,7 @@ public class ElevatorEvent : BaseEvent {
     public GameObject elevatorBody;
     public GameObject elevatorDoor;
     public GameObject ascendingLights;
+    public GameObject gameManager;
     public float ascendSpeed = 100.0f;
     public float rotSpeed = 50.0f;
 
@@ -53,6 +54,7 @@ public class ElevatorEvent : BaseEvent {
             case 2:
                 ascendingLights.active = true;
                 hControl.NewFadeStatus(0.0f, 1);
+                gameManager.GetComponent<HUD>().fadeSpeed = 0.2f;
                 currentStep += 1;
                 break;
             // The created light ascends
